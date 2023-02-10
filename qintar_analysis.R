@@ -70,33 +70,9 @@ surah_df <- data.frame(
   pages_count = pages_count
 )
 
-write.csv(surah_df, file="~/Desktop/Quran/Qintar Analysis/data_pure.csv")
+write.csv(surah_df, file="resdata_pure.csv")
 
 surah_df <- surah_df[order(surah_df$ayah_density, decreasing = TRUE),]
-
-par(mar = c(8, 8, 4, 0), mgp = c(5, 1, 0), family = "Times")
-
-my_bar <- barplot(
-  surah_df$ayah_density,
-  main = "Ayah Density in Every Surah of The Holy Quran",
-  xlab = "Surah No.",
-  ylab = "Density (ayah/page)",
-  names.arg = paste0(surah_df$surahs_en, " ", surah_df$surah_no),
-  cex.names = .6,
-  cex.lab = 1.3,
-  cex.main = 2.5,
-  font.lab = 2,
-  las = 2,
-  ylim = c(0, max(surah_df$ayah_density) + 1),
-  border="coral",
-  col="coral"
-  )
-
-text(my_bar, surah_df$ayah_density + 0.5, round(surah_df$ayah_density, 1), cex = .5)
-
-# png("/Users/yahiasalem/Desktop/Quran/Quran0.png")
-
-dev.off()
 
 ggplot(surah_df, aes(x=reorder(paste0(surahs_en, " (", surah_no, ")"), -ayah_density), y=ayah_density)) + 
   geom_bar(stat="identity") + 
